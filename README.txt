@@ -1,1 +1,1 @@
-data collection sdk.
+自定义view 测试demo
