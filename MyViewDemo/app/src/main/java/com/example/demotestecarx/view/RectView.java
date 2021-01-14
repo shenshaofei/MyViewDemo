@@ -9,6 +9,12 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+
+/**
+ * 自定义view继承自view 重写onMeasure(),onDraw()
+ * onMeasure() 获取自身的测量尺寸
+ * onDraw() 刨除 父控件的padding限制，通过Paint 根据测量尺寸绘制矩形
+ * */
 public class RectView extends View {
 
     private Paint mPaint;
