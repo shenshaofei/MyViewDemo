@@ -6,41 +6,92 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!--    组合式自定义view 顶部view 包含左侧按钮，title ，右侧按钮 可控制哪些view显示-->
     <com.example.demotestecarx.view.MyHeaderView
         android:id="@+id/header_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:show_views="center_text|left_img|right_img"
         app:title_text="好标题"
         app:title_text_color="@color/colorAccent"
-        app:show_views="center_text|left_img|right_img"
         tools:ignore="MissingConstraints" />
 
     <RelativeLayout
         android:id="@+id/rect_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="100dp"
-        android:paddingLeft="100dp"
+        android:layout_below="@+id/header_view"
         android:background="@color/colorAccent"
-        android:layout_below="@+id/header_view">
+        android:paddingLeft="100dp"
+        android:paddingTop="100dp">
 
+        <!--        继承子view的自定义view -->
         <com.example.demotestecarx.view.RectView
             android:id="@+id/rect_view"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
 
     </RelativeLayout>
 
-
+    <!--自定义textview 文字中间绘制一条白线-->
     <com.example.demotestecarx.view.MyTextView
+        android:id="@+id/my_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
         android:layout_below="@+id/rect_layout"
+        android:text="Hello World!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+<!--    可以水平滑动切换的view类似与viewpager-->
+    <com.example.demotestecarx.view.HorizontalView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/my_textview">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_1"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitStart"
+            android:src="@drawable/img_2"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_3"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_4"/>
+
+<!--        <ListView-->
+<!--            android:id="@+id/list1"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--        </ListView>-->
+
+<!--        <ListView-->
+<!--            android:id="@+id/list2"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--        </ListView>-->
+
+<!--        <ListView-->
+<!--            android:id="@+id/list3"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--        </ListView>-->
+
+    </com.example.demotestecarx.view.HorizontalView>
 
 </RelativeLayout>

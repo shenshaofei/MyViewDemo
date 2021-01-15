@@ -73,6 +73,7 @@ public class RectView extends View {
         int height = getHeight() - paddingTop - paddingBottom;
 
         // 开始绘制矩形的区域
-        canvas.drawRect(paddingLeft, paddingTop, width + paddingLeft, height + paddingTop, mPaint);
+        //绘制View，左上角坐标（0+paddingLeft,0+paddingTop），右下角坐标（width+paddingLeft,height+paddingTop）
+        canvas.drawRect(0 + paddingLeft, 0 + paddingTop, width + paddingLeft, height + paddingTop, mPaint);
     }
 }
