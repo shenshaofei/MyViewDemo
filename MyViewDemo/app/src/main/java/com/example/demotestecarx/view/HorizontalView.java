@@ -2,6 +2,7 @@ package com.example.demotestecarx.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -118,6 +119,7 @@ public class HorizontalView extends ViewGroup {
         }
         lastX = x;
         lastY = y;
+        Log.i("sf", "是否拦截事件 。。。》》》  " + intercept + " lastX: " + lastX);
 
         return intercept;
     }
@@ -136,30 +138,49 @@ public class HorizontalView extends ViewGroup {
             // 滑动时只处理view的 scrollBy 距离
             case MotionEvent.ACTION_MOVE:
                 int detalX = x - lastX;
+                int detalY = y - lastY;
                 // 根据滑动的距离移动【】【】【】【】向左滑动如 last=200， x= 100  detalX = -100
-                scrollBy(-detalX, 0);
+                Log.d("sf", "是否拦移动view 。。。》》》 detalX = " + detalX + " event.getX:" + x + " lastX:" + lastX);
+                if (Math.abs(detalX) > Math.abs(detalY)) {
+//                    if (currentIndex <= 0 && detalX > 0 || currentIndex >= getChildCount() -1 && detalX < 0) {
+//                        setHorizontalFadingEdgeEnabled(true);
+////                        setscr
+//                        Log.e("sf", "x方向移动到头 不移动view");
+//                    } else {
+                        scrollBy(-detalX, 0);
+//                    }
+
+                } else {
+                    Log.e("sf", "x方向移动小于y方向 不移动view");
+                }
                 break;
             /**
              * 手势抬起时平滑的滑倒当前完整的child，根据滑动的距离是否大于childWidth ／ 2,或是快速滑动
              */
             case MotionEvent.ACTION_UP:
+                Log.e("sf", "滑动结束 移动到完整的view上");
                 int distance = getScrollX() - childWidth * currentIndex;
                 if (Math.abs(distance) > childWidth / 2) {
                     if (distance > 0) {
                         currentIndex ++;
+                        Log.e("sf", "滑动结束 currentIndex ++ >>" + currentIndex);
                     } else {
                         currentIndex --;
+                        Log.e("sf", "滑动结束 currentIndex -- >>" + currentIndex);
                     }
                 } else {
                     // 获取X轴加速度，units为单位，默认为像素，这里为每秒1000个像素点
-                    velocityTracker.computeCurrentVelocity(500);
+                    velocityTracker.computeCurrentVelocity(1000);
                     float xV = velocityTracker.getXVelocity();
                     // 当x轴加速度 > 50时，产生快速滑动 也会切换view
-                    if (Math.abs(xV) > 50) {
+                    if (Math.abs(xV) > 100) {
                         if (xV < 0) {
+                            // 滑动距离小于1／2 ，滑动时会触发反向的滚动
                             currentIndex ++;
+                            Log.e("sf", "滑动结束 currentIndex F ++ >>" + currentIndex);
                         } else {
                             currentIndex --;
+                            Log.e("sf", "滑动结束 currentIndex F -- >>" + currentIndex);
                         }
                     }
 
@@ -173,6 +194,7 @@ public class HorizontalView extends ViewGroup {
         }
         lastX = x;
         lastY = y;
+        Log.e("sf", "滑动结束 lastX  -- >> " + lastX);
 
         return true;
     }
@@ -182,6 +204,7 @@ public class HorizontalView extends ViewGroup {
      * */
     private void smoothScrollTo(int destX, int destY) {
         // 由当前位置滑动到目标位置 如childView 显示了一半
+        Log.i("sf", "手势结束「 复位 到currentindex 」");
         scroller.startScroll(getScrollX(), getScrollY(), destX - getScrollX(), destY - getScrollY(), 1000);
         // invalidate会重新绘制view也就是会调用view 的 onDraw（）而onDraw又会调用computScroll（）
         invalidate();
