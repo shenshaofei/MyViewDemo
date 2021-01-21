@@ -147,12 +147,22 @@
 
     </ScrollView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@+id/view_pager"
-        android:id="@+id/rv"
+<!--    控件高度必须大于虚线的高度才能显示出来-->
+    <ImageView
+        android:id="@+id/line"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="6dp"
+        android:src="@drawable/custom_divider_green"
+        android:layout_below="@+id/view_pager"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@+id/line"
+        android:id="@+id/rv"
+        android:background="@color/md_divider"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+        android:fadeScrollbars="true"/>
 
 
 </RelativeLayout>

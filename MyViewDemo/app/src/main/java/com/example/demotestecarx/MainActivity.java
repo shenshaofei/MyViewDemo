@@ -4,13 +4,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.demotestecarx.view.MDGridRvDividerDecoration;
+import com.example.demotestecarx.view.MDStaggeredRvAdapter;
+import com.example.demotestecarx.view.MDStaggeredRvDividerDecoration;
 import com.example.demotestecarx.view.MyHeaderView;
 import com.example.demotestecarx.view.NormalAdapter;
 import com.example.demotestecarx.view.RecycleViewDivider;
@@ -23,9 +30,13 @@ public class MainActivity extends AppCompatActivity {
     private MyHeaderView mHeaderView;
     private RecyclerView recyclerView;
     private LinearLayoutManager mLinearLayoutManager;
+    private GridLayoutManager mLayoutManager;
+    private StaggeredGridLayoutManager mStaggeredGridLayoutManager;
     private NormalAdapter adapter;
-    private List<String> mDatas = new ArrayList<>();
+    private MDStaggeredRvAdapter mStaggeredAdapter;
+    private ArrayList<String> mDatas = new ArrayList<>();
 
+    @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,13 +65,17 @@ public class MainActivity extends AppCompatActivity {
 
         // recyclerview
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 40; i++) {
             mDatas.add("item " + i);
         }
         recyclerView = findViewById(R.id.rv);
-        mLinearLayoutManager = new LinearLayoutManager(this);
+        /**
+         * 水平方向上的布局管理器 listview
+         * */
+//        mLinearLayoutManager = new LinearLayoutManager(this);
+
         // 不设置会导致列表显示不出来（必须设置）
-        recyclerView.setLayoutManager(mLinearLayoutManager);
+//        recyclerView.setLayoutManager(mLinearLayoutManager);
         // 方式1：设置默认列表分割线
 //        recyclerView.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
 
@@ -74,17 +89,41 @@ public class MainActivity extends AppCompatActivity {
 //        recyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL));
 
         // //添加自定义分割线：可自定义分割线drawable
+        // 该方式显示不出来虚线，容器高度
 //        recyclerView.addItemDecoration(new RecycleViewDivider(this,LinearLayoutManager.HORIZONTAL,R.drawable.custom_divider_green));
 
-        //添加自定义分割线：可自定义分割线高度和颜色
-        recyclerView.addItemDecoration(new RecycleViewDivider(
-                this, LinearLayoutManager.HORIZONTAL, 10, getResources().getColor(R.color.colorAccent)));
+        //添加自定义分割线：可自定义分割线高度和颜色 (水平方向分割线)
+//        recyclerView.addItemDecoration(new RecycleViewDivider(
+//                this, LinearLayoutManager.HORIZONTAL, 10, getResources().getColor(R.color.colorAccent)));
+
+        /**
+         * 竖直方向的网格样式，每行四个Item
+         * */
+//        mLayoutManager = new GridLayoutManager(this, 4, OrientationHelper.VERTICAL, false);
+//        recyclerView.setLayoutManager(mLayoutManager);
+//        // gridview 分割线
+//        recyclerView.addItemDecoration(new MDGridRvDividerDecoration(this));
+
+        // listview,gridview adapter
+//        recyclerView.setAdapter(adapter);
+
+        /**
+         * 瀑布流效果
+         * */
+        mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(3,OrientationHelper.VERTICAL);
+        recyclerView.setLayoutManager(mStaggeredGridLayoutManager);
+        recyclerView.addItemDecoration(new MDStaggeredRvDividerDecoration(this));
+
 
         // 设置item 添加删除动画
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        adapter = new NormalAdapter(mDatas);
-        recyclerView.setAdapter(adapter);
+//        adapter = new NormalAdapter(mDatas);
+        mStaggeredAdapter = new MDStaggeredRvAdapter(mDatas);
+
+
+        // 瀑布流adapter
+        recyclerView.setAdapter(mStaggeredAdapter);
 
 
     }

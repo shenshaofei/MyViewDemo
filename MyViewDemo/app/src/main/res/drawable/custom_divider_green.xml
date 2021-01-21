@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="line">
-    <stroke android:width="2dp" android:color="@color/colorAccent" android:dashWidth="20dp" android:dashGap="10dp"/>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="line">
+    <!--android:width虚线的高度-->
+    <!--android:width的值必须要小于用它做背景的View的height-->
+
+<!--   外部容器的高度要比虚线的高度大，否则不会显示 -->
+<!--   外部容器的高度要比虚线的高度大，否则不会显示 -->
+<!--   外部容器的高度要比虚线的高度大，否则不会显示 -->
+    <stroke
+        android:width="5dp"
+        android:color="@color/colorAccent"
+        android:dashWidth="5dp"
+        android:dashGap="4dp" />
+
+    <size android:height="4dp" />
 </shape>
