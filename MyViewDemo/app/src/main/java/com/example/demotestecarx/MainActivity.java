@@ -21,6 +21,7 @@ import com.example.demotestecarx.view.MDStaggeredRvDividerDecoration;
 import com.example.demotestecarx.view.MyHeaderView;
 import com.example.demotestecarx.view.NormalAdapter;
 import com.example.demotestecarx.view.RecycleViewDivider;
+import com.example.demotestecarx.view.SpacesItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,19 +47,23 @@ public class MainActivity extends AppCompatActivity {
         mHeaderView.setLeftListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapter.addNewItem();
+//                adapter.addNewItem();
+                mDatas.add(0,"new data");
+                mStaggeredAdapter.updateData(mDatas);
                 // 由于Adapter内部是直接在首个Item位置做增加操作，增加完毕后列表移动到首个Item位置
                 // 不加移动 滑动中间时添加删除看不到效果
-                mLinearLayoutManager.scrollToPosition(0);
+//                mLinearLayoutManager.scrollToPosition(0);
                 Toast.makeText(getApplicationContext(),"点击了左侧返回按钮",Toast.LENGTH_SHORT).show();
             }
         });
         mHeaderView.setRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adapter.deleteItem();
+//                adapter.deleteItem();
+//                mLinearLayoutManager.scrollToPosition(0);
 
-                mLinearLayoutManager.scrollToPosition(0);
+                mDatas.remove(0);
+                mStaggeredAdapter.updateData(mDatas);
                 Toast.makeText(getApplicationContext(),"点击了右侧返回按钮",Toast.LENGTH_SHORT).show();
             }
         });
@@ -110,9 +115,12 @@ public class MainActivity extends AppCompatActivity {
         /**
          * 瀑布流效果
          * */
-        mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(3,OrientationHelper.VERTICAL);
+        mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(mStaggeredGridLayoutManager);
-        recyclerView.addItemDecoration(new MDStaggeredRvDividerDecoration(this));
+        // 瀑布流layout 是按照高最小的地方排的不一定都在行首，
+//        recyclerView.addItemDecoration(new MDStaggeredRvDividerDecoration(this));
+        // 瀑布流简单分割线
+        recyclerView.addItemDecoration(new SpacesItemDecoration(16));
 
 
         // 设置item 添加删除动画

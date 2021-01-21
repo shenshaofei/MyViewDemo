@@ -157,10 +157,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_below="@+id/line"
         android:id="@+id/rv"
-        android:background="@color/md_divider"
+        android:background="@color/md_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="5dp"
+        android:paddingLeft="0dp"
         android:paddingTop="5dp"
         android:fadeScrollbars="true"/>
 

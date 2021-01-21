@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 
 import androidx.recyclerview.widget.OrientationHelper;
@@ -42,22 +43,26 @@ public class MDStaggeredRvDividerDecoration extends RecyclerView.ItemDecoration 
             isDrawHorizontalDivider = true;
             // 如果是竖直方向，最右边一列不绘制竖直方向的间隔
             if(orientation == OrientationHelper.VERTICAL && (i + 1) % spanCount == 0) {
-                isDrawVerticalDivider = false;
+                isDrawVerticalDivider = true;
+                Log.e("sf", "item：" + i + " 竖直方向不绘制 | " + " spanCount= " + spanCount + " isDrawVerticalDivider=" + isDrawVerticalDivider);
             }
 
             // 如果是竖直方向，最后一行不绘制水平方向间隔
             if(orientation == OrientationHelper.VERTICAL && i >= childCount - extra) {
                 isDrawHorizontalDivider = false;
+                Log.d("sf", "item：" + i + " 竖直方向不绘制 最后一行不绘制水平方向间隔 ");
             }
 
             // 如果是水平方向，最下面一行不绘制水平方向的间隔
             if(orientation == OrientationHelper.HORIZONTAL && (i + 1) % spanCount == 0) {
                 isDrawHorizontalDivider = false;
+                Log.d("sf", "item：" + i + " 水平方向 最下面一行不绘制水平方向的间隔 ");
             }
 
             // 如果是水平方向，最后一列不绘制竖直方向间隔
             if(orientation == OrientationHelper.HORIZONTAL && i >= childCount - extra) {
-                isDrawVerticalDivider = false;
+//                isDrawVerticalDivider = false;
+                Log.e("sf", "item：" + i + " 水平方向 最后一列不绘制竖直方向间隔 ");
             }
 
             if(isDrawHorizontalDivider) {
@@ -101,6 +106,8 @@ public class MDStaggeredRvDividerDecoration extends RecyclerView.ItemDecoration 
         final int left = child.getRight() + params.rightMargin;
         final int right = left + mDivider.getIntrinsicWidth();
         mDivider.setBounds(left, top, right, bottom);
+        Log.d("sf", "item：" + position + " 绘制竖直方向间隔 L = " + left + " top:" + top + " right:" +
+                + right + " bottom:" + bottom);
         mDivider.draw(canvas);
     }
 
